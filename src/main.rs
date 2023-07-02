@@ -16,5 +16,7 @@ fn main() {
         .output()
         .expect("failed to execute process");
     let out = String::from_utf8(output.stdout).unwrap();
+
+    // test
     println!("{}", out);
 }
