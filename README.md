@@ -1,10 +1,12 @@
 # learn_rust
 
-
 ## 创建config.ini
 
 config.ini
 ```
 [config]
-command = ""
+url = ""
+local_dir = ""
+remote_dir = ""
+
 ```
