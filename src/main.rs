@@ -16,9 +16,15 @@ fn main() {
     println!("{:?}", cmd);
     let output = Command::new("bash")
         .arg("-c")
-        .arg(cmd)
+        .arg(&cmd)
         .output()
         .expect("failed to execute process");
-    let out = String::from_utf8(output.stdout).unwrap();
-    println!("{}", out);
+
+    if output.status.success() {
+        let out = String::from_utf8(output.stdout).unwrap();
+        println!("{}", out);
+    } else {
+        let err = String::from_utf8(output.stderr).unwrap();
+        eprintln!("{}", err);
+    }
 }
