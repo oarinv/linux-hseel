@@ -1,17 +1,21 @@
 use std::process::Command;
-extern crate ini;
-use ini::Ini;
 
 fn main() {
-    // 读取配置
-    let conf = Ini::load_from_file("config.ini").unwrap();
-    let section = conf.section(Some("config")).unwrap();
+    // init vps
 
-    let url = section.get("url").unwrap();
-    let local_dir = section.get("local_dir").unwrap();
-    let remote_dir = section.get("remote_dir").unwrap();
+    let package = ["ffmpeg", "bash-completion", "curl", "wget"];
+    let mut install_text = "".to_string();
 
-    let cmd = format!("cd {local_dir} && rsync -av --delete ./ root@{url}:{remote_dir}");
+    for i in &package {
+        install_text = format!("{} {}", install_text, i);
+    }
+
+    println!("{}", install_text);
+    let _ = run_cmd(install_text);
+}
+
+fn run_cmd(install_text: String) {
+    let cmd = format!("apt install {} -y", install_text);
 
     println!("{:?}", cmd);
     let output = Command::new("bash")
@@ -28,3 +32,4 @@ fn main() {
         eprintln!("{}", err);
     }
 }
+// todo .....
